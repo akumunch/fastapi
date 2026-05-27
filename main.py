@@ -1,47 +1,29 @@
-from fastapi import FastAPI
+from pydantic import BaseModel
 
-app = FastAPI()
+class User(BaseModel):
+    id: int
+    name: str
 
-@app.get("/")
-def home():
-    return {"message":"Hello World"}
-
-@app.get("/add")
-def add(a: int, b:int):
-    return {"sum":a+b}
-
-@app.get("/user/{name}")
-def name(name:str):
-    return {"name":f"Hello {name}"}
+user = User(id=123, name='Jane Doe')
+print(user.model_dump())
 
 
 
+# from fastapi import FastAPI
 
+# app = FastAPI()
 
+# @app.get("/")
+# def home():
+#     return {"message":"Hello World"}
 
+# @app.get("/add")
+# def add(a: int, b:int):
+#     return {"sum":a+b}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# @app.get("/user/{name}")
+# def name(name:str):
+#     return {"name":f"Hello {name}"}
 
 
 
