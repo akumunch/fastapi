@@ -1,4 +1,4 @@
-from pydantic import BaseModel 
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional
 
@@ -17,5 +17,4 @@ class NoteResponse(BaseModel):
     created_at: datetime
     updated_at: Optional[datetime] = None 
 
-    class Config:
-        from_attributes = True #enables object read for pydantic, it converts note object into json/dict automatically and read from it
+    model_config = ConfigDict(from_attributes=True) #enables object read for pydantic, it converts note object into json/dict automatically and read from it

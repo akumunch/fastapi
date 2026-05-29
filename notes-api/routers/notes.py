@@ -24,14 +24,14 @@ def get_notes(db: Session = Depends(get_db)):
 def get_note(note_id: int, db: Session = Depends(get_db)):
     note = db.query(models.Note).filter(models.Note.id == note_id).first()
     if not note:
-        return HTTPException (status_code=404, detail= f"Note {note_id} not found")
+        raise HTTPException (status_code=404, detail= f"Note {note_id} not found")
     return note
 
 @router.put("/{note_id}", response_model= schemas.NoteResponse)
 def update_note(note_id: int, updated: schemas.NoteUpdate, db: Session = Depends(get_db)):
     note = db.query(models.Note).filter(models.Note.id == note_id).first()
     if not note: 
-        return HTTPException (status_code=404, detail= f"Note {note_id} not found")
+        raise HTTPException (status_code=404, detail= f"Note {note_id} not found")
     
     if updated.title is not None:
         note.title = updated.title
@@ -45,7 +45,7 @@ def update_note(note_id: int, updated: schemas.NoteUpdate, db: Session = Depends
 def del_note(note_id: int, db: Session = Depends(get_db)):
     note = db.query(models.Note).first()
     if not note: 
-        return HTTPException (status_code=404, detail= f"Note {note_id} not found")
+        raise HTTPException (status_code=404, detail= f"Note {note_id} not found")
     db.delete(note)
     db.commit()
     return {"Message":"Deleted Note Successfully"}
